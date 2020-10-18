@@ -21,7 +21,7 @@ def books_list():
     static_path = os.path.join(os.path.abspath('./'), 'static')
     import glob2
     html_list = glob2.glob(r'{}/*.html'.format(static_path))
-    html_book_list = [i for i in html_list]
+    html_book_list = [os.path.split(i)[1] for i in html_list]
 
     _res = res(html_book_list)
     # dir_name = os.path.join(static_path, )
