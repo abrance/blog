@@ -5,6 +5,13 @@ import glob2
 
 from apps.log import logger
 
+
+"""
+这是一个加入js 脚本的脚本，将static下html文件一键添加脚本。
+因为只是一个小功能，没有将它封装，也不存在什么 测试脚本了。
+"""
+
+
 js = '<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.11.3/jquery.js">' \
      '</script><script> $(function () {console.log($("a").attr("target", "_blank"));})</script>'
 
