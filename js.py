@@ -13,7 +13,7 @@ from apps.log import logger
 
 
 js = '<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.11.3/jquery.js">' \
-     '</script><script> $(function () {console.log($("a").attr("target", "_blank"));})</script>'
+     '</script><script> $(function () {$("a").attr("target", "_blank");})</script>'
 
 
 def edit_js_in_html(_js):

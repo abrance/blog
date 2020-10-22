@@ -3,7 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>abrance</title>
+
+    <style type="text/css">
+        ul,
+        li {
+            list-style: none;
+        }
+
+        li {
+            height: 30px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        li.open {
+            height: auto;
+        }
+
+        li span {
+            display: block;
+            line-height: 30px;
+        }
+
+        li span i {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 8px solid #369;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-top-color: transparent;
+            vertical-align: middle;
+            cursor: pointer;
+            transform-origin: 0% 40%;
+            transition: 0.3s;
+        }
+
+        li.open span i {
+            transform: rotate(90deg);
+        }
+    </style>
+
 </head>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.11.3/jquery.js"></script>
+<script>
+    $(function () {
+        $("a").attr("target", "_blank");
+
+        //请求 获取 后端数据
+        // $.ajax({
+        //     url: "/apps",
+        //     type: "GET",
+        //     dataType: "json",
+        //     success: function (data) {
+        //         console.log(data["res"])
+        //     }
+        // });
+        $("body").append("<ul id='books'></ul>");
+
+        $.get("/apps", function (data) {
+            var apps = data["res"];
+            var apps_length = apps.length;
+            for (let i = 0; i < apps_length; i++) {
+                $("#books").append("<li data-name=" + apps[i] + "><span><i></i>" + apps[i] + "</span></li>");
+            }
+
+            $("#books li span").click(function () {
+                var li_o = $(this).parent();
+                var name = li_o.attr('data-name');
+
+                var p_len = li_o.children("p").length;
+                console.log(p_len);
+
+                if (p_len === 0) {
+                    li_o.addClass("open");
+                    // 这个 "/"+name 是新的请求路径
+                    $.get("/" + name, (data) => {
+                        var books = data["res"];
+                        var books_length = books.length;
+
+                        for (let i = 0; i < books_length; i++) {
+                            console.log(books[i]);
+                            $(this).parent().append("<p>" + books[i] + "</p>");
+                        }
+                    });
+                } else {
+                    li_o.toggleClass("open");
+                }
+            })
+        });
+
+    })
+</script>
 <body>
 <h1>welcome index</h1>
 </body>
