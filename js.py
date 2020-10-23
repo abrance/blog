@@ -1,6 +1,6 @@
 import linecache
 
-from apps.init import static_path
+from settings.config import Config
 import glob2
 
 from apps.log import logger
@@ -18,7 +18,7 @@ js = '<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jque
 
 def edit_js_in_html(_js):
 
-    html_ls = glob2.glob('{}/*.html'.format(static_path))
+    html_ls = glob2.glob('{}/*.html'.format(Config.static_path))
     logger.info('html_ls: {}'.format(html_ls))
 
     for i in html_ls:
