@@ -73,7 +73,7 @@
                 var name = li_o.attr('data-name');
 
                 var p_len = li_o.children("p").length;
-                console.log(p_len);
+                // console.log(p_len);
 
                 if (p_len === 0) {
                     li_o.addClass("open");
@@ -84,7 +84,7 @@
 
                         for (let i = 0; i < books_length; i++) {
                             console.log(books[i]);
-                            $(this).parent().append("<p>" + books[i] + "</p>");
+                            $(this).parent().append("<p><a href=/" + name+"/"+ books[i] +" target=_blank>" + books[i] + "</a></p>");
                         }
                     });
                 } else {

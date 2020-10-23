@@ -5,6 +5,7 @@ import glob2
 from flask import send_from_directory, send_file, jsonify, redirect
 
 from init import app, static_path
+from log import logger
 from utils import res
 
 
@@ -33,9 +34,12 @@ def books_list():
     """
     html_list = glob2.glob(r'{}/*.html'.format(static_path))
     html_book_list = [os.path.split(i)[1] for i in html_list]
+    logger.info(html_book_list)
+    index_page = 'index.html'
+    if index_page in html_book_list:
+        html_book_list.remove(index_page)
 
     _res = res(html_book_list)
-    # dir_name = os.path.join(static_path, )
     return jsonify(_res)
 
 
