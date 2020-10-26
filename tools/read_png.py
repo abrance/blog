@@ -25,6 +25,7 @@ API_KEY = 'Ry78Sf4N2xGN95K041tWlX95'
 SECRET_KEY = 'k4eob853qbUdwvwMK9y8cf2pcFufbGrO'
 
 OCR_URL = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic"
+accuate_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
 
 """  TOKEN start """
 TOKEN_URL = 'https://aip.baidubce.com/oauth/2.0/token'
@@ -104,7 +105,7 @@ def read(path):
     token = fetch_token()
 
     # 拼接通用文字识别高精度url
-    image_url = OCR_URL + "?access_token=" + token
+    image_url = accuate_url + "?access_token=" + token
 
     text = ""
 
@@ -123,3 +124,8 @@ def read(path):
 
     # 打印文字
     return text
+
+
+if __name__ == '__main__':
+    path = ""
+    read(path)

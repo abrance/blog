@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>abrance ocr</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.11.3/jquery.js"></script>
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            var files = $("#ocr_file")[0].files;
+
+            var formdata = new FormData();
+            formdata.append("photo", files[0]);
+            $.ajax({
+                url:"/tools/ocr",
+                type: "post",
+                data:formdata,
+                contentType:false,
+                processData: false,
+                success:function (res) {
+                    // res=Json.parse(res);
+                    // if (res.success){
+                        // $("#output").append("<li><span></span></li>")
+                        var ocr_ls = res["res"];
+                        var _len = ocr_ls.length;
+                        for (let i=0; i < _len; i++) {
+                            $("#output").append("<li><span>"+ ocr_ls[i] +"</span></li>");
+                        }
+                    // }
+
+                }
+            })
+        })
+    })
+
+</script>
+
+<body>
+
+<span>
+    <input type="file" accept="image/png" id="ocr_file" class="file_select">
+    <input type="submit" id="submit">
+
+</span>
+
+<ul id = "output"></ul>
+
+</body>
+</html>

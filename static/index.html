@@ -59,16 +59,16 @@
         //         console.log(data["res"])
         //     }
         // });
-        $("body").append("<ul id='books'></ul>");
+        $("body").append("<ul id='apps'></ul>");
 
         $.get("/apps", function (data) {
             var apps = data["res"];
             var apps_length = apps.length;
             for (let i = 0; i < apps_length; i++) {
-                $("#books").append("<li data-name=" + apps[i] + "><span><i></i>" + apps[i] + "</span></li>");
+                $("#apps").append("<li data-name=" + apps[i] + "><span><i></i>" + apps[i] + "</span></li>");
             }
 
-            $("#books li span").click(function () {
+            $("#apps li span").click(function () {
                 var li_o = $(this).parent();
                 var name = li_o.attr('data-name');
 

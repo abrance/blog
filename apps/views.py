@@ -1,14 +1,14 @@
 
 import os
+from pathlib import Path
 
 import glob2
-from flask import send_from_directory, send_file, jsonify, redirect
+from flask import send_from_directory, send_file, jsonify, redirect, request
 
-from init import app
-from settings.config import Config
-from log import logger
-# from tools.read_png import read
-from utils import res
+from settings.config import Config, app
+from apps.log import logger
+from tools.apis import my_ocr
+from apps.utils import res, error
 
 
 @app.route('/')
@@ -24,7 +24,7 @@ def index():
 
 @app.route('/apps')
 def app_ls():
-    _app_ls = ['books']
+    _app_ls = ['books', 'tools']
     return jsonify({'res': _app_ls})
     # return jsonify(_t)
 
@@ -34,12 +34,13 @@ def books_list():
     """
     静态文件 列表
     """
-    html_list = glob2.glob(r'{}/*.html'.format(Config.static_path))
+    books_path = str(Path(Config.static_path)/"books")
+    html_list = glob2.glob(r'{}/*.html'.format(books_path))
     html_book_list = [os.path.split(i)[1] for i in html_list]
     logger.info(html_book_list)
-    index_page = 'index.html'
-    if index_page in html_book_list:
-        html_book_list.remove(index_page)
+    # index_page = 'index.html'
+    # if index_page in html_book_list:
+    #     html_book_list.remove(index_page)
 
     _res = res(html_book_list)
     return jsonify(_res)
@@ -50,7 +51,7 @@ def books(filename):
     """
     静态文件 访问接口，提供阅读
     """
-    book_name = os.path.join(Config.static_path, filename)
+    book_name = os.path.join(Config.static_path, 'books', filename)
     return send_file(book_name)
 
 
@@ -71,19 +72,25 @@ def tool_ls():
     return jsonify(res(tools))
 
 
-# @app.route('/tools/<tool_name>', methods='POST')
-# def tool_imp(tool_name):
-#     """
-#     工具实现
-#     :param tool_name: ocr
-#     :return:
-#     """
-#     f_ls = request.files['file']
-#     os.path.join(Config.static_path, )
-#     f.save()
-#
-#     tool_map = {
-#         'ocr': read
-#     }
-#     if tool_name in tool_map.keys():
-#         tool = tool_map.get(tool_name)
+@app.route('/tools/<tool_name>', methods=['POST', 'GET'])
+def tool_imp(tool_name):
+    """
+    工具实现
+    :param tool_name: ocr
+    :return:
+    """
+    if request.method == "GET":
+        tool_page = Path(Config.static_path) / (tool_name+'.html')
+        return send_file(tool_page)
+
+    elif request.method == "POST":
+        me_dc = {
+            'ocr': my_ocr
+        }
+        ret, msg, code = me_dc.get(tool_name)(request)
+        if ret:
+            return jsonify(res(ret))
+        else:
+            return jsonify(error(msg, code))
+    else:
+        return jsonify(error('no support method type'))
