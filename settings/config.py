@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from flask import Flask
-from flask_uploads import IMAGES
+# from flask_uploads import IMAGES
 
 
 class Config(object):
@@ -26,8 +26,8 @@ class Config(object):
 app = Flask(__name__, static_url_path=Config.static_path)
 # json化后中文 unicode码问题
 app.config['JSON_AS_ASCII'] = False
-app.config['UPLOADED_PHOTOS_DEST'] = Config.upload_path
-app.config['UPLOADED_PHOTO_ALLOW'] = IMAGES
+# app.config['UPLOADED_PHOTOS_DEST'] = Config.upload_path
+# app.config['UPLOADED_PHOTO_ALLOW'] = IMAGES
 
 
 if __name__ == '__main__':
