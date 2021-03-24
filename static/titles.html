@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>abrance</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <style type="text/css">
+        @import "/static/style.css";
+        @import "/static/script/select2.min.css";
+        textarea::-webkit-input-placeholder {
+            font-size: 80%;
+        }
+    </style>
+</head>
+<script type="text/javascript" src="/static/script/http_cdn.bootcdn.net_ajax_libs_jquery_1.11.3_jquery.js"></script>
+<script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static/script/jquery.md5.js"></script>
+<script type="text/javascript" src="/static/script/select2.min.js"></script>
+<script>
+    let user = null;
+    let primary_id = null;
+
+    $(function (){
+        $('.js-example-basic-multiple').select2({
+            ajax: {
+                type: 'GET',
+                url: '/lichen/list/label',
+                dataType: 'json',
+                processResults: function (res) {
+                    if (res['code'] === 200)
+                    {
+                        return {
+                            results: res['res']
+                        }
+                    } else {
+                        alert('unexpect except');
+                    }
+                }
+            },
+            placeholder: "请至少选择一个标签",
+            maximumSelectionLength: 2,
+        });
+
+        get_title();
+        user = $.cookie('user');
+        primary_id = $.cookie('primary_id');
+        let user_info = $("#user-info");
+        user_info.empty();
+        if (user && primary_id)
+        {
+            user_info.append(`<p> ${user} </p>`);
+        } else
+        {
+            user_info.append("<input type='button' value='log in' id='log_in'>");
+            $("#log_in").bind('click', log_in);
+        }
+        $("#log_in_submit").bind('click', logging);
+
+        $("#editor-submit").bind('click', get_post_title);
+    })
+</script>
+
+<body>
+<header class="header-expr-class" id="title-header">
+    <div id="header">
+        <div class="header-left">
+            <p>
+                <a class="link-a-style"> <<< </a>
+            </p>
+        </div>
+        <div id="user-info"></div>
+    </div>
+</header>
+<section class="big_table">
+    <div id="big_tb_row">
+        <div id="label-domain">
+            <!--      将节点都放在这里      -->
+        </div>
+        <div id="main-domain">
+            <table id="title-tb">
+                <tr>
+                    <th>
+                        character
+                    </th>
+                    <th>
+                        title
+                    </th>
+                </tr>
+                <tr>
+                    <td>站长说没过:</td>
+                    <td>
+                        <div class="tr-comment-style">
+                            请探讨不要文明
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="editor">
+                <div id="upon-editor">
+                    <div id="editor-gap">
+                        <!--         放用户信息               -->
+                    </div>
+                    <div id="title-editor">
+                        <div id="button_selector">
+                            <div id="label-selector">
+                                <label>
+                                    <select class="js-example-basic-multiple" id="label_selector" name="labels" multiple="multiple" style="width: 50%">
+                                    </select>
+                                </label>
+                            </div>
+                            <div id="editor-button">
+                                <input type="button" id="editor-submit" value="title">
+                            </div>
+                            <div id="selected-area">
+
+                            </div>
+                        </div>
+                        <div class="editor-input">
+                            <label>
+                                <textarea id="editor-title" maxlength="500" cols="5" placeholder="标题可以描述完整，正文就不用再写了" ></textarea>
+                                <textarea id="editor-subtitle" maxlength="500" cols="5" placeholder="正文"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tb-side">
+
+        </div>
+    </div>
+</section>
+
+<div class="mm">
+    <div class="login">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password (5 characters minimum(forget about it)):</label><input id="password" type="password" name="password">
+        </div>
+        <input id="log_in_submit" type="submit" value="Sign in">
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/static/utils.js"></script>
+<script type="text/javascript" src="/static/titles.js"></script>
+</html>

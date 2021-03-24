@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>expr</title>
+    <style type="text/css">
+        @import "/static/style.css";
+        /** {*/
+        /*    padding: 0;*/
+        /*    margin: 0;*/
+        /*}*/
+
+        .comment {
+            float: left;
+            width: 100%;
+            height: auto;
+            border-width: thin;
+            border-style: solid;
+            margin: 10px;
+        }
+
+
+    </style>
+</head>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.11.3/jquery.js"></script>
+
+<script>
+    $(function (){
+        function publish(){
+            // console.log('aaa');
+            let a = $("#edit-val").val();
+            let _character = "imba";
+            $(".g_view")
+                .append("<tr>" + "<td>" + _character +
+                    "</td>" +
+                    "<td><div class='tr-comment-style'>"+a+"</div></td>" +
+                    "</tr>");
+        }
+
+        $("#editor-submit").bind('click', function(){
+            // console.log("aaa");
+            let user_id = 'imba';
+            let data = {
+                user_id: user_id,
+                value: $("#edit-val").val()
+            };
+            publish();
+            $.ajax({
+                type: 'POST',
+                url: '/speaking',
+                data: data,
+                success: publish,
+                dataType: "JSON"
+            })
+
+        })
+    })
+
+</script>
+<body>
+<header class="header-expr-class">
+    <div class="header-solid-bottom">
+        <div class="back">
+<!--            TODO href need change-->
+            <p class="link-p-style"><a href="index.html" class="link-a-style"> <<< </a></p>
+        </div>
+    </div>
+</header>
+<div class="g_view">
+    <table>
+        <tr>
+            <th>
+                character
+            </th>
+            <th>
+                comment
+            </th>
+        </tr>
+        <tr>
+            <td>
+                1:
+            </td>
+            <td>
+                <div class="tr-comment-style">
+                    11111123123
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2:
+            </td>
+            <td>
+                <div class="tr-comment-style">
+                    22222
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div class="editor">
+    <div id="editor-gap">
+
+    </div>
+    <input type="button" id="editor-submit" value="submit">
+    <div id="editor-input">
+        <label>
+            <textarea maxlength="500" cols="5" placeholder="write some?" id="edit-val"></textarea>
+        </label>
+    </div>
+    <div id="editor-text">
+
+    </div>
+</div>
+<div>
+    <p>
+        end line
+    </p>
+</div>
+</body>
+</html>

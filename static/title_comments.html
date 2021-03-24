@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>abrance</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <style type="text/css">
+        @import "/static/style.css";
+    </style>
+</head>
+
+<script type="text/javascript" src="/static/script/http_cdn.bootcdn.net_ajax_libs_jquery_1.11.3_jquery.js"></script>
+<script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static/utils.js"></script>
+
+
+<script>
+    let user = null;
+    let primary_id = null;
+
+    function title_show(response) {
+        let code = response["code"];
+        if (code === 200)
+        {
+            let res = response['res'];
+            let comment_ls = res['comment_ls'];
+            let create_time = res['create_time'];
+            let last_modify_time = res['last_modify_time'];
+            let nickname = res['nickname'];
+            let primary_id = res['primary_id'];
+            let subtitle = res['subtitle'];
+            let title = res['title'];
+            let title_id = res['title_id'];
+            let time_str = get_difference_time(create_time);
+
+            // let new_date = new Date().getTime();
+            // let t_before = new_date - Date.parse(create_time);
+            // let days = Math.floor(t_before/(24*60*60*1000));
+            // let leave = Math.floor(t_before%(24*60*60*1000));
+            // let hours = Math.floor(leave/(3600*1000));
+            // let minutes = Math.floor(leave%(3600*1000)/(60*1000));
+            // let time_str = '';
+            // if (days > 0)
+            // {
+            //     time_str = `${days} 天前`;
+            // } else if (hours > 0)
+            // {
+            //     time_str = `${hours} 小时前`;
+            // } else if (minutes > 0)
+            // {
+            //     time_str = `${time_str} 分钟前`;
+            // }
+            // TODO 这里 small下面 nickname 应用a标签做一个用户信息查询的跳转
+            let title_window = `<div class="title-style"><h1>${title}</h1></div> <div class="create_time-style"> <small class="small-style"> <span>${nickname}</span> . <span>${time_str}</span> </small> </div>`;
+            let subtitle_window = `<div class="subtitle-style"><div id="subtitle-content">${subtitle}</div></div>`;
+            $(".title-user").append(title_window + subtitle_window);
+
+        } else if (code === 400)
+        {
+            alert('获取页面失败');
+        } else
+        {
+            alert('未知的错误');
+        }
+    }
+
+    $(function (){
+        user = $.cookie('user');
+        primary_id = $.cookie('primary_id');
+        let user_info = $("#user-info")
+        // user_info.empty();
+        if (user && primary_id)
+        {
+            // user_info.children("")
+            user_info.children("#log_in").hide();
+        } else
+        {
+            user_info.append(`<p> ${user} </p>`);
+        }
+
+        let primary_id_str = window.location.href;
+        primary_id_str = primary_id_str.split('/').pop();
+
+        $.ajax({
+            type: "GET",
+            url: `/lichen/title/${primary_id_str}`,
+            success: title_show
+        })
+
+    })
+</script>
+
+<body>
+
+<div id="TOP">
+<!-- TODO 这部分用于导航等布置 -->
+</div>
+<div id="Wrapper">
+<!--  除了导航和底部样式以外的所有  -->
+    <div class="content">
+    <!--    内容    -->
+
+    </div>
+    <div class="sep">
+    <!--    分隔线    -->
+    </div>
+</div>
+<div id="Bottom">
+<!--  底部  -->
+</div>
+
+<header class="header-expr-class">
+    <div class="header-solid-bottom">
+        <p>
+            <a class="link-a-style"> <<< </a>
+        </p>
+    </div>
+    <div id="user-info">
+
+        <input type='button' value='log in' id='log_in'>
+    </div>
+</header>
+<div class="title-part">
+    <div class="title-user">
+    </div>
+</div>
+<div class="g_view">
+    <table id="title-comment-tb">
+        <tr>
+            <th>
+                character
+            </th>
+            <th>
+                comment
+            </th>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
