@@ -292,3 +292,14 @@ body {
     color: #cccccc;
 }
 /* title small end */
+
+/*footer start*/
+.footer-style {
+    width: 100%;
+    height: 200px;
+    background-color: #eeeeee;
+    padding-top: 30px;
+    text-align: center;
+    float: left;
+}
+/*footer end*/
