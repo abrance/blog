@@ -36,7 +36,11 @@ function append_users_info() {
     user_info.children("#log_in").hide();
     // TODO 个人信息需要做一下
 
-    user_info.append(`<p> ${user} </p>`);
+    let user_part =
+        `<div class="#user-div"><p> ${user} </p></div>`;
+    user_info.append(user_part);
+
+    // user_info.mouseover()
 }
 
 // 登录成功后回调函数

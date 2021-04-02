@@ -260,12 +260,13 @@ class DataBase(object):
                 if not query_lab.first():
                     return False
             else:
+                now = datetime.datetime.now()
                 row_t = Title(title_id=title_id, title=title, subtitle=subtitle,
-                              primary_id=primary_id, nickname=nickname)
+                              primary_id=primary_id, nickname=nickname, create_time=now)
                 session.add(row_t)
 
                 for label_id in label_id_ls:
-                    row_tl = TitleLabel(label_id=label_id, title_id=title_id)
+                    row_tl = TitleLabel(label_id=label_id, title_id=title_id, create_time=now)
                     session.add(row_tl)
                 return True
 

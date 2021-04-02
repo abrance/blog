@@ -61,6 +61,11 @@ body {
     /* TODO 暂时没解决div内 内联元素垂直居中*/
     margin-top: 10px;
 }
+
+#user-div {
+    height: 100%;
+    width: 50%;
+}
 /* -------------------- header end -------------------*/
 /* -------------------- table start ------------------*/
 .big_table {
