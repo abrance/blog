@@ -1,6 +1,9 @@
 function get_difference_time(time_from_server) {
-    //let new_date = new Date().getTime();
-    let t_before = Date.parse(new Date()) - Date.parse(time_from_server);
+    let new_date = new Date().getTime();
+    const timezone = 8;
+    const offset = new Date().getTimezoneOffset();
+    const local_time = new Date(new_date+offset*60*1000+timezone*60*60*1000);
+    let t_before = local_time - Date.parse(time_from_server);
     let days = Math.floor(t_before/(24*60*60*1000));
     let leave = Math.floor(t_before%(24*60*60*1000));
     let hours = Math.floor(leave/(3600*1000));
