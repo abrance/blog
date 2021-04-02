@@ -1,6 +1,6 @@
 function get_difference_time(time_from_server) {
-    let new_date = new Date().getTime();
-    let t_before = new_date - Date.parse(time_from_server);
+    //let new_date = new Date().getTime();
+    let t_before = Date.parse(new Date()) - Date.parse(time_from_server);
     let days = Math.floor(t_before/(24*60*60*1000));
     let leave = Math.floor(t_before%(24*60*60*1000));
     let hours = Math.floor(leave/(3600*1000));
@@ -16,5 +16,6 @@ function get_difference_time(time_from_server) {
     {
         time_str = `${time_str} 分钟前`;
     }
+    console.log(time_str)
     return time_str;
 }
