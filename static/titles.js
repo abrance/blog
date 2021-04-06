@@ -104,8 +104,6 @@ function expr_title(response) {
                 span_label += `<a class="span-a-labels">${obj}</a>`
             })
             span_label.replace(".", "");
-            let create_time_str = get_difference_time(create_time);
-            let last_modify_time_str = get_difference_time(last_modify_time);
             let new_line =
                 `<tr>
                     <td>${nickname}:</td>
@@ -117,8 +115,8 @@ function expr_title(response) {
                                 <span class="title-small">
                                     ${span_label}
                                     <a class="span-a-nickname">${nickname}</a>
-                                    <span class="span-time">最后修改自${last_modify_time_str}</span>
-                                    <span class="span-time">创建自${create_time_str}</span>
+                                    <span class="span-time">最后修改自${last_modify_time}</span>
+                                    <span class="span-time">创建自${create_time}</span>
                                 </span>
                             </small>
  

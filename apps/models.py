@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 
 from apps.log import logger
-from apps.utils import worker
+from apps.utils import worker, time_string
 
 conn_str = "mysql+pymysql://blog:111111@127.0.0.1:3306/blog?charset=utf8mb4"
 OK = 10
@@ -436,7 +436,7 @@ class DataBase(object):
                 'primary_id': str(row_p.primary_id),
                 'phone_number': row_p.phone_number,
                 'name': row_p.name,
-                'create_time': row_p.create_time,
+                'create_time': time_string(row_p.create_time),
                 'mail': row_p.mail,
             }
             return info
@@ -502,8 +502,8 @@ class DataBase(object):
                         'title': row_t.title,
                         'primary_id': str(row_t.primary_id),
                         'nickname': row_t.nickname,
-                        'create_time': row_t.create_time,
-                        'last_modify_time': row_t.last_modify_time,
+                        'create_time': time_string(row_t.create_time),
+                        'last_modify_time': time_string(row_t.last_modify_time),
                         'label_ls': list(title_dc.get(row_t.title_id))
                     } for row_t in query_t_all]
                     return ls
@@ -538,7 +538,7 @@ class DataBase(object):
                             'primary_id': str(row_comment.primary_id),
                             'nickname': row_comment.nickname,
                             'text': row_comment.text,
-                            'create_time': row_comment.create_time
+                            'create_time': time_string(row_comment.create_time)
                         }
                         comment_ls.append(comment_dc)
 
@@ -549,8 +549,8 @@ class DataBase(object):
                     'subtitle': row_title.subtitle,
                     'primary_id': str(row_title.primary_id),
                     'nickname': row_title.nickname,
-                    'create_time': row_title.create_time,
-                    'last_modify_time': row_title.last_modify_time,
+                    'create_time': time_string(row_title.create_time),
+                    'last_modify_time': time_string(row_title.last_modify_time),
                     'comment_ls': comment_ls
                 }
                 return ret_dc
@@ -577,7 +577,7 @@ class DataBase(object):
                             'primary_id': str(row_sc.primary_id),
                             'nickname': row_sc.nickname,
                             'text': row_sc.text,
-                            'create_time': row_sc.create_time
+                            'create_time': time_string(row_sc.create_time)
                         }
                         second_comment_ls.append(sc_dc)
 
@@ -585,7 +585,7 @@ class DataBase(object):
                     'primary_id': str(row_c.primary_id),
                     'nickname': row_c.nickname,
                     'text': row_c.text,
-                    'create_time': row_c.create_time,
+                    'create_time': time_string(row_c.create_time),
                     'second_comment': second_comment_ls
                 }
                 return ret_dc

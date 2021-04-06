@@ -69,18 +69,18 @@
             }
 
             $("#apps li span").click(function () {
-                var li_o = $(this).parent();
-                var name = li_o.attr('data-name');
+                const li_o = $(this).parent();
+                const name = li_o.attr('data-name');
 
-                var p_len = li_o.children("p").length;
+                const p_len = li_o.children("p").length;
                 // console.log(p_len);
 
                 if (p_len === 0) {
                     li_o.addClass("open");
                     // 这个 "/"+name 是新的请求路径
                     $.get("/" + name, (data) => {
-                        var books = data["res"];
-                        var books_length = books.length;
+                        const books = data["res"];
+                        const books_length = books.length;
 
                         for (let i = 0; i < books_length; i++) {
                             console.log(books[i]);

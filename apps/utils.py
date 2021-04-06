@@ -2,6 +2,7 @@ import hashlib
 import random
 import string
 import time
+from datetime import datetime
 
 from apps.log import logger
 
@@ -20,6 +21,32 @@ def random_str(num: int):
         return salt
     else:
         return ''
+
+
+def time_string(t1, t2=datetime.now()):
+    """
+    时间求差返回字符
+    :param t2: 被减数
+    :param t1: 减数
+    :return: n s/m/d
+    """
+    logger.info('t1:{}'.format(t1))
+    assert isinstance(t1, datetime) and isinstance(t2, datetime) and t1 < t2
+    days = (t2-t1).days
+    if days > 0:
+        t_str = "{}天前".format(days)
+    elif (t1-t2).seconds > 0:
+        total_sec = (t1-t2).seconds
+        if total_sec >= 3600:
+            t_str = "{}小时前".format(total_sec//3600)
+        elif total_sec >= 60:
+            t_str = "{}分钟前".format(total_sec//60)
+        else:
+            t_str = "{}秒前".format(total_sec)
+    else:
+        t_str = "刚刚"
+    logger.info(t_str)
+    return t_str
 
 
 def timing_(func):
