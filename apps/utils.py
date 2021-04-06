@@ -26,14 +26,14 @@ def random_str(num: int):
 def time_string(t1):
     """
     时间求差返回字符
-    :param t2: 被减数
     :param t1: 减数
     :return: n s/m/d
     """
     logger.info('t1:{}'.format(t1))
     t2 = datetime.now()
     logger.info('{} {} {}'.format(type(t1), type(t2), t2))
-    assert isinstance(t1, datetime) and isinstance(t2, datetime) and t1 <= t2
+    assert isinstance(t1, datetime) and isinstance(t2, datetime)
+    t1 = t1 if t1 <= t2 else t2
     days = (t2-t1).days
     if days > 0:
         t_str = "{}天前".format(days)
