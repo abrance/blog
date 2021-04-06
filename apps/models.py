@@ -262,7 +262,7 @@ class DataBase(object):
             else:
                 now = datetime.datetime.now()
                 row_t = Title(title_id=title_id, title=title, subtitle=subtitle,
-                              primary_id=primary_id, nickname=nickname, create_time=now)
+                              primary_id=primary_id, nickname=nickname, create_time=now, last_modify_time=now)
                 session.add(row_t)
 
                 for label_id in label_id_ls:
