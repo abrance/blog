@@ -51,7 +51,6 @@ body {
     float: right;
     font-family: Arial, sans-serif;
     text-align: center;
-    align-items: center;
 }
 
 #log_in {
@@ -62,10 +61,38 @@ body {
     margin-top: 10px;
 }
 
-#user-div {
+.user-div {
     height: 100%;
     width: 50%;
+    text-align: center;
+    margin: 0 25%;
+    float: left;
+    position: relative;
 }
+
+.user-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-div:hover {
+    background-color: #969eff;
+}
+
+.user-div p {}
+
+.below-user {
+    padding: 0;
+    list-style: none;
+    background-color: #969eff;
+    z-index: 100;
+}
+
+.below-user li p:hover {
+    text-decoration: underline #7f96ff;
+    background-color: #7fb8ff;
+}
+
 /* -------------------- header end -------------------*/
 /* -------------------- table start ------------------*/
 .big_table {

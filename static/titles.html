@@ -48,7 +48,7 @@
         user_info.empty();
         if (user && primary_id)
         {
-            user_info.append(`<p> ${user} </p>`);
+            append_users_info();
         } else
         {
             user_info.append("<input type='button' value='log in' id='log_in'>");

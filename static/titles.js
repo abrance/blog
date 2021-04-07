@@ -37,8 +37,43 @@ function append_users_info() {
     // TODO 个人信息需要做一下
 
     let user_part =
-        `<div class="#user-div"><p> ${user} </p></div>`;
+        `<div class="user-div">
+            <ul class="user-ul">
+                <li><p> ${user} </p></li>
+            </ul>
+         </div>`;
     user_info.append(user_part);
+    $(".user-div").click(function (){
+        let below = $(this).children(".below-user");
+        if (below.length) {
+            if (below.is(":visible")) below.hide()
+            else if (below.is(":hidden")) below.show()
+        }
+        else {
+            let ls =
+                `<ul class="below-user">
+                    <li><p>logout</p></li>
+                    <li><p>settings</p></li>
+                    <li><p>me</p></li>
+                    <li><p>other</p></li>
+                </ul>`
+            $(this).append(ls);
+            $(this).find("li p").each((i, obj)=> {
+                $(obj).click(function () {
+                    const val = $(this).text();
+                    if (val === "logout")
+                    {
+                        $.removeCookie("primary_id");
+                        $.removeCookie("user");
+                        location.reload();
+                    } else if (val === "settings")
+                    {
+
+                    }
+                })
+            })
+        }
+    })
 
     // user_info.mouseover()
 }
