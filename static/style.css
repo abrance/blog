@@ -68,7 +68,7 @@ body {
 .user-div {
     /*float: left;*/
     text-align: center;
-    /*position: relative;*/
+    position: relative;
 }
 
 .user-ul {
