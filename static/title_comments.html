@@ -12,28 +12,34 @@
 <script type="text/javascript" src="/static/script/http_cdn.bootcdn.net_ajax_libs_jquery_1.11.3_jquery.js"></script>
 <script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
 <script type="text/javascript" src="/static/utils.js"></script>
+<script type="text/javascript" src="/static/titles.js"></script>
 
 
 <script>
     let user = null;
     let primary_id = null;
+    let comment_ls_length = 0;
+    let last_modify_time = "";
 
     function title_show(response) {
         let code = response["code"];
         if (code === 200)
         {
-            let res = response['res'];
-            let comment_ls = res['comment_ls'];
-            let create_time = res['create_time'];
-            let last_modify_time = res['last_modify_time'];
-            let nickname = res['nickname'];
-            let primary_id = res['primary_id'];
-            let subtitle = res['subtitle'];
-            let title = res['title'];
-            let title_id = res['title_id'];
+            const res = response['res'];
+            const comment_ls = res['comment_ls'];
+
+            comment_ls_length = comment_ls.length;
+            const create_time = res['create_time'];
+            last_modify_time = res['last_modify_time'];
+            console.log(window.comment_ls_length, window.last_modify_time);
+            const nickname = res['nickname'];
+            const primary_id = res['primary_id'];
+            const subtitle = res['subtitle'];
+            const title = res['title'];
+            const title_id = res['title_id'];
 
             // TODO 这里 small下面 nickname 应用a标签做一个用户信息查询的跳转
-            let title_window = `<div class="title-style"><h1>${title}</h1></div> <div class="create_time-style"> <small class="small-style"> <span>${nickname}</span> . <span>${create_time}</span> </small> </div>`;
+            let title_window = `<div class="title-style"><h1>${title}</h1></div> <div class="create_time-style"> <small class="small-style"> <span>${nickname}</span> . <span>创建自${create_time}</span> </small> </div>`;
             let subtitle_window = `<div class="subtitle-style"><div id="subtitle-content">${subtitle}</div></div>`;
             $(".title-user").append(title_window + subtitle_window);
 
@@ -54,10 +60,11 @@
         if (user && primary_id)
         {
             // user_info.children("")
-            user_info.children("#log_in").hide();
+            // user_info.children("#log_in").hide();
+            append_users_info();
         } else
         {
-            user_info.append(`<p> ${user} </p>`);
+            // user_info.append(`<p> ${user} </p>`);
         }
 
         let primary_id_str = window.location.href;
@@ -65,9 +72,18 @@
 
         $.ajax({
             type: "GET",
+            async: false,
             url: `/lichen/title/${primary_id_str}`,
             success: title_show
         })
+        console.log("......", last_modify_time);
+        let sep_str = ``;
+        if (comment_ls_length===0)
+            sep_str = `<small class="small-style"><span>${comment_ls_length}条留言</span></small>`;
+        else
+            sep_str =
+                `<small class="small-style"><span>${comment_ls_length}条留言</span>.<span>最后留言自${last_modify_time}</span></small>`;
+        $(".title-comments-sep").append(sep_str);
 
     })
 </script>
@@ -91,38 +107,78 @@
 <!--  底部  -->
 </div>
 
-<header class="header-expr-class">
-    <div class="header-solid-bottom">
-        <p>
-            <a class="link-a-style"> <<< </a>
-        </p>
-    </div>
-    <div id="user-info">
-
-        <input type='button' value='log in' id='log_in'>
+<header class="header-expr-class" id="title-header">
+    <div id="header">
+        <div class="header-left">
+            <p>
+                <a class="link-a-style"> <<< </a>
+            </p>
+        </div>
+        <div class="header-right">
+            <div class="user-info"></div>
+        </div>
     </div>
 </header>
-<div class="title-part">
-    <div class="title-user">
-    </div>
-</div>
-<div class="g_view">
-    <table id="title-comment-tb">
-        <tr>
-            <th>
-                character
-            </th>
-            <th>
-                comment
-            </th>
-        </tr>
-        <tr>
-            <td>
+<section class="big_table">
+    <div class="big_tb_row">
+        <div class="label-domain">
+            <!--      将节点都放在这里      -->
+        </div>
+        <div class="main-domain">
+            <div id="main-view">
+                <div class="title-part">
+                    <div class="title-user">
+                    </div>
+                </div>
+                <div class="title-comments-sep">
+                </div>
+                <div class="g_view">
+                    <table id="title-comment-tb">
+                        <tr>
+                            <th>
+                                character
+                            </th>
+                            <th>
+                                comment
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
 
-            </td>
-        </tr>
-    </table>
-</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="editor">
+                    <div class="upon-editor">
+                        <div class="editor-gap">
+                            <!--         放用户信息               -->
+                        </div>
+                        <div id="title-editor">
+                            <div class="editor-input">
+                                <label>
+                                    <textarea id="editor-comment" maxlength="500" cols="5" placeholder="正文" spellcheck="false"></textarea>
+                                </label>
+                            </div>
+                            <div class="editor-button">
+                                <button class="editor-submit">title</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tb-side">
+
+        </div>
+    </div>
+</section>
+
+<footer class="footer-style">
+    footer
+</footer>
+
 
 </body>
 </html>

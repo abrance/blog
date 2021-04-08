@@ -1,28 +1,4 @@
 
-// function get_difference_time(time_from_server) {
-//     let new_date = new Date().getTime();
-//     let t_before = new_date - Date.parse(time_from_server);
-//     let days = Math.floor(t_before/(24*60*60*1000));
-//     let leave = Math.floor(t_before%(24*60*60*1000));
-//     let hours = Math.floor(leave/(3600*1000));
-//     let minutes = Math.floor(leave%(3600*1000)/(60*1000));
-//     let time_str = '';
-//     if (days > 0)
-//     {
-//         time_str = `${days} 天前`;
-//     } else if (hours > 0)
-//     {
-//         time_str = `${hours} 小时前`;
-//     } else if (minutes > 0)
-//     {
-//         time_str = `${time_str} 分钟前`;
-//     }
-//     return time_str;
-// }
-
-// 绑定事件 start
-// const {get_difference_time} = require("./utils");
-
 function log_in() {
     $(".mm").show();
 }
@@ -30,7 +6,8 @@ function log_in() {
 // 登录成功后将用户信息加入页面中
 function append_users_info() {
     console.assert(user);
-    let user_info = $("#user-info");
+    let user_info = $(".user-info");
+    let editor_user_info = $(".editor-gap");
     // display none
     $(".mm").hide();
     user_info.children("#log_in").hide();
@@ -38,12 +15,11 @@ function append_users_info() {
 
     let user_part =
         `<div class="user-div">
-            <ul class="user-ul">
-                <li><p> ${user} </p></li>
-            </ul>
+            <p> ${user} </p>
          </div>`;
     user_info.append(user_part);
-    $(".user-div").click(function (){
+    editor_user_info.append(user_part);
+    $(".header-right .user-info .user-div").click(function (){
         let below = $(this).children(".below-user");
         if (below.length) {
             if (below.is(":visible")) below.hide()
@@ -141,7 +117,7 @@ function expr_title(response) {
             span_label.replace(".", "");
             let new_line =
                 `<tr>
-                    <td>${nickname}:</td>
+                    <td class="td-nickname-style">${nickname}:</td>
                     <td>
                         <div class="tr-comment-style">
                             <a class="title-link" href=/lichen/title_page/${title_id}>${title}</a>

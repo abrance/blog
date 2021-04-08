@@ -44,7 +44,7 @@
         get_title();
         user = $.cookie('user');
         primary_id = $.cookie('primary_id');
-        let user_info = $("#user-info");
+        let user_info = $(".user-info");
         user_info.empty();
         if (user && primary_id)
         {
@@ -68,38 +68,24 @@
                 <a class="link-a-style"> <<< </a>
             </p>
         </div>
-        <div id="user-info"></div>
+        <div class="header-right">
+            <div class="user-info"></div>
+        </div>
     </div>
 </header>
 <section class="big_table">
-    <div id="big_tb_row">
-        <div id="label-domain">
+    <div class="big_tb_row">
+        <div class="label-domain">
             <!--      将节点都放在这里      -->
         </div>
-        <div id="main-domain">
+        <div class="main-domain">
             <table id="title-tb">
-                <tr>
-                    <th>
-                        character
-                    </th>
-                    <th>
-                        title
-                    </th>
-                </tr>
-                <tr>
-                    <td>站长说没过:</td>
-                    <td>
-                        <div class="tr-comment-style">
-                            请探讨不要文明
-                        </div>
-                    </td>
-                </tr>
 
             </table>
 
             <div class="editor">
-                <div id="upon-editor">
-                    <div id="editor-gap">
+                <div class="upon-editor">
+                    <div class="editor-gap">
                         <!--         放用户信息               -->
                     </div>
                     <div id="title-editor">
@@ -110,24 +96,26 @@
                                     </select>
                                 </label>
                             </div>
-                            <div id="editor-button">
-                                <input type="button" id="editor-submit" value="title">
-                            </div>
                             <div id="selected-area">
 
                             </div>
                         </div>
                         <div class="editor-input">
-                            <label>
+                            <label for="editor-title">
                                 <textarea id="editor-title" maxlength="500" cols="5" placeholder="标题可以描述完整，正文就不用再写了" spellcheck="false"></textarea>
+                            </label>
+                            <label for="editor-subtitle">
                                 <textarea id="editor-subtitle" maxlength="500" cols="5" placeholder="正文" spellcheck="false"></textarea>
                             </label>
+                        </div>
+                        <div class="editor-button">
+                            <button class="editor-submit">title</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="tb-side">
+        <div class="tb-side">
 
         </div>
     </div>
