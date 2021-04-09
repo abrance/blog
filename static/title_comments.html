@@ -18,6 +18,7 @@
 <script>
     let user = null;
     let primary_id = null;
+    let comment_ls = Array();
     let comment_ls_length = 0;
     let last_modify_time = "";
 
@@ -26,12 +27,10 @@
         if (code === 200)
         {
             const res = response['res'];
-            const comment_ls = res['comment_ls'];
-
+            comment_ls = res['comment_ls'];
             comment_ls_length = comment_ls.length;
             const create_time = res['create_time'];
             last_modify_time = res['last_modify_time'];
-            console.log(window.comment_ls_length, window.last_modify_time);
             const nickname = res['nickname'];
             const primary_id = res['primary_id'];
             const subtitle = res['subtitle'];
@@ -43,6 +42,32 @@
             let subtitle_window = `<div class="subtitle-style"><div id="subtitle-content">${subtitle}</div></div>`;
             $(".title-user").append(title_window + subtitle_window);
 
+            // 留言加入
+            let comment_tb = $("#title-comment-tb");
+            comment_ls.forEach((obj, index) => {
+                const comment_id = obj["comment_id"];
+                const create_time = obj["create_time"];
+                const nickname = obj["nickname"];
+                const primary_id = obj["primary_id"];
+                const comment = obj["text"];
+                const comment_ele =
+                    `<tr>
+                        <td class="tr-nickname-style">${nickname}</td>
+                        <td>
+                            <div class="tr-comment-style">
+                                <p>${comment}</p>
+                                <br>
+                                <small>
+                                    <span class="title-small">
+                                        <a class="span-a-nickname">${nickname}</a>
+                                        <span class="span-time">创建自${create_time}</span>
+                                    </span>
+                                </small>
+                            </div>
+                        </td>
+                    </tr>`;
+                comment_tb.append(comment_ele);
+            })
         } else if (code === 400)
         {
             alert('获取页面失败');
@@ -52,31 +77,55 @@
         }
     }
 
+    function post_comment(title_id_e) {
+        if (user && primary_id)
+        {
+            const comment = $("#editor-comment").val();
+            const title_id = title_id_e.data;
+            console.log(title_id, primary_id, user, comment);
+            if (comment.length > 0 && comment.trim().replace(/\s/g,"").length > 0)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "/lichen/create_comment",
+                    data: {
+                        title_id: title_id,
+                        primary_id: primary_id,
+                        username: user,
+                        comment: comment,
+                    },
+                    dataType: "JSON",
+                    success: post_success
+                })
+            } else
+            {
+                alert("内容为空");
+            }
+        } else
+        {
+            alert("先登录");
+        }
+    }
+
     $(function (){
         user = $.cookie('user');
         primary_id = $.cookie('primary_id');
-        let user_info = $("#user-info")
-        // user_info.empty();
         if (user && primary_id)
         {
-            // user_info.children("")
-            // user_info.children("#log_in").hide();
             append_users_info();
         } else
         {
-            // user_info.append(`<p> ${user} </p>`);
         }
 
-        let primary_id_str = window.location.href;
-        primary_id_str = primary_id_str.split('/').pop();
+        let title_id_str = window.location.href;
+        title_id_str = title_id_str.split('/').pop();
 
         $.ajax({
             type: "GET",
             async: false,
-            url: `/lichen/title/${primary_id_str}`,
+            url: `/lichen/title/${title_id_str}`,
             success: title_show
         })
-        console.log("......", last_modify_time);
         let sep_str = ``;
         if (comment_ls_length===0)
             sep_str = `<small class="small-style"><span>${comment_ls_length}条留言</span></small>`;
@@ -85,6 +134,7 @@
                 `<small class="small-style"><span>${comment_ls_length}条留言</span>.<span>最后留言自${last_modify_time}</span></small>`;
         $(".title-comments-sep").append(sep_str);
 
+        $(".editor-submit").click(title_id_str, post_comment)
     })
 </script>
 
@@ -162,7 +212,7 @@
                                 </label>
                             </div>
                             <div class="editor-button">
-                                <button class="editor-submit">title</button>
+                                <button class="editor-submit">comment</button>
                             </div>
                         </div>
                     </div>

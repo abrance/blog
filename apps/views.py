@@ -8,7 +8,7 @@ from flask import send_from_directory, send_file, jsonify, redirect, request, ma
 from settings.config import Config, app
 from apps.log import logger
 from tools.apis import my_ocr
-from apps.utils import res, error, my_md5
+from apps.utils import res, error
 from apps.models import db
 
 
@@ -213,3 +213,24 @@ def inquire_title_page(title_id):
     """
     titles_name = os.path.join(Config.static_path, 'title_comments.html')
     return send_file(titles_name)
+
+
+@app.route('/lichen/create_comment', methods=['POST'])
+def create_comment():
+    """
+    创建留言
+    :return:
+    """
+    info = request.form
+    nickname, primary_id = info.get('username'), info.get('primary_id')
+    title_id_str, comment = info.get('title_id'), info.get('comment')
+    logger.info('{} {} {} {}'.format(nickname, primary_id, title_id_str, comment))
+    try:
+        assert isinstance(title_id_str, str) and isinstance(comment, str) and \
+               isinstance(primary_id, str) and primary_id.isdigit()
+    except AssertionError:
+        logger.info('create title param error')
+        return jsonify(error('param error'))
+    title_id = int(title_id_str)
+    ret = db.create_comment(title_id, int(primary_id), nickname, comment)
+    return jsonify(res(ret))

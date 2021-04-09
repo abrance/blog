@@ -190,7 +190,6 @@ body {
 
 .td-nickname-style {
     padding: 1%;
-    /*width: 90%;*/
 }
 
 .tr-comment-style {
@@ -256,6 +255,10 @@ body {
     /*line-height: 120%;*/
     /*text-align: left;*/
     /*overflow: auto;*/
+}
+
+#title-comment-tb {
+    width: 100%;
 }
 
 .small-style span{

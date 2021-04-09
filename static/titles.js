@@ -152,7 +152,7 @@ function get_title(){
     })
 }
 
-function post_title_success(response) {
+function post_success(response) {
     let code = response['code'];
     if (code === 200)
     {
@@ -207,7 +207,7 @@ function get_post_title() {
                     },
                     // traditional:true,
                     dataType: "JSON",
-                    success:post_title_success
+                    success:post_success
                 })
             }
             else {
