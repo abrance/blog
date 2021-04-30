@@ -134,7 +134,7 @@ function expr_title(response) {
                         </div>
                     </td>
                 </tr>`;
-            $("#title-tb").append(new_line);
+            $(".title-tb").append(new_line);
 
         }
     } else if (code === 404){

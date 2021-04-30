@@ -111,6 +111,18 @@ class SecondComment(Base):
     create_time = sqlalchemy.Column(sqlalchemy.DateTime, nullable=False, default=datetime.datetime.now())
 
 
+class Book(Base):
+    __tablename__ = 'Books'
+    mysql_charset = 'utf8mb4'
+
+    book_id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    book = sqlalchemy.Column(sqlalchemy.String(127), nullable=False)
+    alia = sqlalchemy.Column(sqlalchemy.String(127))
+    group = sqlalchemy.Column(sqlalchemy.String(31))
+    create_time = sqlalchemy.Column(sqlalchemy.DateTime, nullable=False, default=datetime.datetime.now())
+    last_modify_time = sqlalchemy.Column(sqlalchemy.DateTime, nullable=False, default=datetime.datetime.now())
+
+
 class DataBase(object):
     def __init__(self):
         self.engine = sqlalchemy.create_engine(
@@ -592,6 +604,30 @@ class DataBase(object):
             else:
                 logger.error('comment no found')
                 return False
+
+    # ------------------- books ---------------
+    def book_list(self, group=None, page=1, limit=20):
+        with self.session_scope() as session:
+            query_book = session.query(Book)
+            if group:
+                query_book = query_book.filter(
+                    Book.group == group
+                )
+            query_book = query_book.order_by(Book.create_time.desc()).offset(limit * (page - 1)).limit(limit)
+            row_book = query_book.first()
+            book_ls = []
+            if row_book:
+                for row_book in query_book.all():
+                    book_dc = {
+                        "book_id": str(row_book.book_id),
+                        "book": row_book.book,
+                        "alia": row_book.alia,
+                        "group": row_book.group,
+                        "create_time": time_string(row_book.create_time),
+                        "last_modify_time": time_string(row_book.last_modify_time),
+                    }
+                    book_ls.append(book_dc)
+            return book_ls
 
 
 db = DataBase()

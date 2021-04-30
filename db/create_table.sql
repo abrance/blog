@@ -62,4 +62,14 @@ create table `SecondComment`(
     `preference` INT NOT NULL ,                     -- 点赞数
     `create_time` DATETIME NOT NULL ,
     PRIMARY KEY (`second_comment_id`)
+);
+
+create table `Books`(
+    `book_id` INT NOT NULL AUTO_INCREMENT,          -- book_id
+    `book` VARCHAR(127) NOT NULL ,                  -- 书名
+    `alia` VARCHAR(127) NULL,                       -- 别名
+    `group` VARCHAR(31)  NULL COMMENT '书组 暂时只为一列',
+    `create_time` DATETIME NOT NULL ,               -- 创建时间
+    `last_modify_time` DATETIME NOT NULL ,          -- 最后修改的时间
+    PRIMARY KEY (`book_id`)
 )

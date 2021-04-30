@@ -30,7 +30,7 @@ body {
     float: left;
 }
 
-#header {
+.header {
     width: 100%;
     height: auto;
     border-bottom: thin solid grey;
@@ -121,7 +121,7 @@ body {
     display: table-cell;
 }
 
-#title-tb {
+.title-tb {
     width: 100%;
     background-color: #ffffff;
 }
@@ -209,7 +209,7 @@ body {
 }
 
 .mm{
-    display: none;
+    display: block;
     position: fixed;
     z-index: 10;
     top: 0;

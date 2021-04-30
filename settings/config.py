@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from flask import Flask
+from flask_cors import CORS
 # from flask_uploads import IMAGES
 
 
@@ -24,6 +25,7 @@ class Config(object):
 
 
 app = Flask(__name__, static_url_path=Config.static_path, static_folder=Config.static_path)
+CORS(app, supports_credentials=True)
 # json化后中文 unicode码问题
 app.config['JSON_AS_ASCII'] = False
 # app.config['UPLOADED_PHOTOS_DEST'] = Config.upload_path

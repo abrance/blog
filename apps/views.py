@@ -47,14 +47,15 @@ def books_list():
     """
     静态文件 列表
     """
-    books_path = str(Path(Config.static_path)/"books")
-    html_list = glob2.glob(r'{}/*.html'.format(books_path))
-    html_book_list = [os.path.split(i)[1] for i in html_list]
-    logger.info(html_book_list)
-    # index_page = 'index.html'
-    # if index_page in html_book_list:
-    #     html_book_list.remove(index_page)
+    # books_path = str(Path(Config.static_path)/"books")
+    # html_list = glob2.glob(r'{}/*.html'.format(books_path))
+    # html_book_list = [os.path.split(i)[1] for i in html_list]
+    # logger.info(html_book_list)
 
+    info = request.args
+    group, page, limit = info.get('group'), info.get('page'), info.get('limit')
+    logger.info('{} {} {}'.format(group, page, limit))
+    html_book_list = db.book_list()
     _res = res(html_book_list)
     return jsonify(_res)
 
