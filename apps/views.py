@@ -2,7 +2,6 @@ import json
 import os
 from pathlib import Path
 
-import glob2
 from flask import send_from_directory, send_file, jsonify, redirect, request, make_response
 
 from settings.config import Config, app

@@ -2,7 +2,6 @@ from pathlib import Path
 
 from flask import Flask
 from flask_cors import CORS
-# from flask_uploads import IMAGES
 
 
 class Config(object):

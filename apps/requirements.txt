@@ -13,3 +13,4 @@ urllib3==1.25.10
 Werkzeug==1.0.1
 pytest==6.1.0
 flask_uploads==0.2.1
+flask-cors==3.0.10

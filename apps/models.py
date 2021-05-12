@@ -3,7 +3,6 @@ import sys
 
 import contextlib
 import sqlalchemy
-# import sqlalchemy.ext
 import sqlalchemy.ext.declarative
 import sqlalchemy.dialects.mysql
 from sqlalchemy.exc import IntegrityError
@@ -15,16 +14,6 @@ from apps.utils import worker, time_string
 conn_str = "mysql+pymysql://blog:111111@127.0.0.1:3306/blog?charset=utf8mb4"
 OK = 10
 Base = sqlalchemy.ext.declarative.declarative_base()
-
-
-# class Test(Base):
-#     __tablename__ = 'test1'
-#     mysql_charset = "utf8mb4"
-#
-#     s = sqlalchemy.Column(sqlalchemy.String(255)(32), primary_key=True)
-#     i = sqlalchemy.Column(sqlalchemy.INT)  # 2020/3/31 客户端标识
-#     i2 = sqlalchemy.Column(sqlalchemy.INT)
-#     create_time = sqlalchemy.Column(sqlalchemy.DATETIME, default=datetime.datetime.now())
 
 
 class Primary(Base):
